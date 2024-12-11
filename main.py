@@ -23,10 +23,6 @@ read qubits
 """
 
 import math
-from math import *
-import random
-from random import *
-
 import random
 
 def pick_index(probabilities):
@@ -63,7 +59,24 @@ def number_to_binary(number):
         raise ValueError("Input must be an integer.")
     return bin(number)[2:]
 
-
+class qubits_lib:
+    def __init__(self):
+        self.qubits = []
+    def add(self, name, coefficients):
+        qubit_array = [name, coefficients]
+        self.qubits.append(qubit_array)
+    def get_coefs(self, name):
+        for _ in self.qubits:
+            if _[0] == name:
+                return _[1]
+    def get_probs(self, name):
+        for _ in self.qubits:
+            if _[0] == name:
+                probs = []
+                for i in _[1]:
+                    probs.append(math.pow(i, 2))
+                return probs
+        
 class qubits:
     def __init__(self):
         self.complex_coefficients = []
@@ -86,3 +99,7 @@ test.define([0.25, 0.25, 0.25, 0.25])
 print(test.get())
 for i in range(12):
     print(test.read())
+
+testlib = qubits_lib()
+testlib.add("test bit", test.get())
+print(testlib.get_probs("test bit"))
